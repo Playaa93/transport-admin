@@ -3,6 +3,14 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ─── Anti-flash ─── */
+html {
+  background-color: #F5F4F0;
+}
+html.dark {
+  background-color: #2E3440;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -16,6 +24,7 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
+  --color-sidebar-hover-bg: var(--sidebar-hover-bg);
   --color-chart-5: var(--chart-5);
   --color-chart-4: var(--chart-4);
   --color-chart-3: var(--chart-3);
@@ -44,75 +53,81 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
+  --animate-fade-in: fade-in 0.5s ease-out;
+  --animate-count-up: count-up 0.6s ease-out;
 }
 
+/* ─── Light Mode — FleetZen ─── */
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --radius: 0.75rem;
+  --background: hsl(48 20% 95%);
+  --foreground: hsl(220 15% 15%);
+  --card: hsl(0 0% 100%);
+  --card-foreground: hsl(220 15% 15%);
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(220 15% 15%);
+  --primary: hsl(177 67% 26%);
+  --primary-foreground: hsl(0 0% 100%);
+  --secondary: hsl(48 15% 90%);
+  --secondary-foreground: hsl(220 15% 20%);
+  --muted: hsl(210 10% 94%);
+  --muted-foreground: hsl(215 15% 45%);
+  --accent: hsl(48 15% 90%);
+  --accent-foreground: hsl(220 15% 20%);
+  --destructive: hsl(0 72% 51%);
+  --border: hsl(0 0% 90%);
+  --input: hsl(0 0% 90%);
+  --ring: hsl(177 67% 26%);
+  --chart-1: hsl(177 67% 26%);
+  --chart-2: hsl(210 60% 50%);
+  --chart-3: hsl(40 90% 50%);
+  --chart-4: hsl(270 60% 55%);
+  --chart-5: hsl(340 70% 55%);
+  --sidebar: rgba(255, 255, 255, 0.72);
+  --sidebar-foreground: hsl(220 15% 25%);
+  --sidebar-primary: hsl(177 67% 26%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
+  --sidebar-accent: hsl(177 67% 26% / 0.1);
+  --sidebar-accent-foreground: hsl(177 67% 26%);
+  --sidebar-border: hsl(0 0% 88%);
+  --sidebar-ring: hsl(177 67% 26%);
+  --sidebar-hover-bg: hsl(0 0% 96%);
 }
 
+/* ─── Dark Mode — Nord Polar Night ─── */
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --background: hsl(220 16% 16%);
+  --foreground: hsl(219 28% 88%);
+  --card: hsl(220 16% 20%);
+  --card-foreground: hsl(219 28% 88%);
+  --popover: hsl(220 16% 20%);
+  --popover-foreground: hsl(219 28% 88%);
+  --primary: hsl(179 25% 65%);
+  --primary-foreground: hsl(220 16% 16%);
+  --secondary: hsl(220 16% 24%);
+  --secondary-foreground: hsl(219 28% 88%);
+  --muted: hsl(220 16% 24%);
+  --muted-foreground: hsl(219 14% 60%);
+  --accent: hsl(220 16% 24%);
+  --accent-foreground: hsl(219 28% 88%);
+  --destructive: hsl(0 60% 55%);
+  --border: hsl(220 16% 24%);
+  --input: hsl(220 16% 28%);
+  --ring: hsl(179 25% 65%);
+  --chart-1: hsl(179 25% 65%);
+  --chart-2: hsl(210 34% 63%);
+  --chart-3: hsl(40 70% 60%);
+  --chart-4: hsl(270 40% 65%);
+  --chart-5: hsl(340 50% 60%);
+  --sidebar: hsl(220 16% 14%);
+  --sidebar-foreground: hsl(219 28% 88%);
+  --sidebar-primary: hsl(179 25% 65%);
+  --sidebar-primary-foreground: hsl(220 16% 16%);
+  --sidebar-accent: hsl(179 25% 65% / 0.1);
+  --sidebar-accent-foreground: hsl(179 25% 65%);
+  --sidebar-border: hsl(220 16% 24%);
+  --sidebar-ring: hsl(179 25% 65%);
+  --sidebar-hover-bg: hsl(220 16% 22%);
 }
 
 @layer base {
@@ -121,5 +136,117 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* ─── Selection ─── */
+::selection {
+  background-color: hsl(177 67% 40% / 0.3);
+  color: inherit;
+}
+.dark ::selection {
+  background-color: hsl(179 25% 65% / 0.3);
+}
+
+/* ─── Custom Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(177 67% 26% / 0.3);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(177 67% 26% / 0.5);
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: hsl(179 25% 65% / 0.2);
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: hsl(179 25% 65% / 0.4);
+}
+
+/* ─── Utility Classes ─── */
+.hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+.dark .hover-lift:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.transition-smooth {
+  transition: all 0.2s ease;
+}
+
+.shadow-soft {
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.08);
+}
+.dark .shadow-soft {
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
+}
+
+.shadow-medium {
+  box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.12);
+}
+.dark .shadow-medium {
+  box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.35);
+}
+
+/* ─── Status Utilities ─── */
+.status-success {
+  background-color: hsl(152 60% 92%);
+  color: hsl(152 60% 30%);
+}
+.dark .status-success {
+  background-color: hsl(152 40% 20%);
+  color: hsl(152 60% 70%);
+}
+
+.status-warning {
+  background-color: hsl(40 90% 92%);
+  color: hsl(40 80% 30%);
+}
+.dark .status-warning {
+  background-color: hsl(40 50% 20%);
+  color: hsl(40 80% 70%);
+}
+
+.status-error {
+  background-color: hsl(0 70% 93%);
+  color: hsl(0 70% 35%);
+}
+.dark .status-error {
+  background-color: hsl(0 50% 20%);
+  color: hsl(0 70% 70%);
+}
+
+/* ─── Animations ─── */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes count-up {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }

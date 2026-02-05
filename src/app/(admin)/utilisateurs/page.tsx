@@ -8,7 +8,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 
 export const dynamic = 'force-dynamic';
 
@@ -20,51 +20,59 @@ export default async function UtilisateursPage() {
     .order('nom', { ascending: true });
 
   if (error) {
-    return <p className="text-red-500">Erreur : {error.message}</p>;
+    return <p className="text-destructive">Erreur : {error.message}</p>;
   }
+
+  const count = users?.length ?? 0;
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Utilisateurs</h1>
-        <p className="text-gray-500 mt-1">{users?.length ?? 0} utilisateur(s)</p>
+        <h1 className="text-2xl font-semibold tracking-tight text-foreground">Utilisateurs</h1>
+        <p className="text-muted-foreground mt-1">{count} utilisateur{count !== 1 ? 's' : ''}</p>
       </div>
 
       <Card>
         <CardContent className="p-0">
           <Table>
             <TableHeader>
-              <TableRow>
+              <TableRow className="bg-muted/50">
                 <TableHead>Nom</TableHead>
                 <TableHead>Email</TableHead>
-                <TableHead>Rôle</TableHead>
+                <TableHead>Role</TableHead>
                 <TableHead>Site</TableHead>
-                <TableHead>Téléphone</TableHead>
-                <TableHead>Dernière connexion</TableHead>
+                <TableHead>Telephone</TableHead>
+                <TableHead>Derniere connexion</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {(!users || users.length === 0) ? (
                 <TableRow>
-                  <TableCell colSpan={6} className="text-center text-gray-400 py-8">
+                  <TableCell colSpan={6} className="text-center text-muted-foreground py-8">
                     Aucun utilisateur
                   </TableCell>
                 </TableRow>
               ) : (
                 users.map((u: any) => (
-                  <TableRow key={u.id}>
-                    <TableCell className="font-medium text-gray-900">
+                  <TableRow key={u.id} className="hover:bg-muted/30 transition-colors">
+                    <TableCell className="font-medium text-foreground">
                       {[u.prenom, u.nom].filter(Boolean).join(' ') || u.pseudo || '—'}
                     </TableCell>
-                    <TableCell className="text-gray-600">{u.email}</TableCell>
+                    <TableCell>{u.email}</TableCell>
                     <TableCell>
-                      <Badge variant={u.role === 'admin' ? 'default' : 'secondary'}>
+                      <Badge
+                        className={
+                          u.role === 'admin'
+                            ? 'bg-primary/10 text-primary hover:bg-primary/20'
+                            : 'bg-muted text-muted-foreground'
+                        }
+                      >
                         {u.role ?? 'conducteur'}
                       </Badge>
                     </TableCell>
-                    <TableCell className="text-gray-600">{u.site ?? '—'}</TableCell>
-                    <TableCell className="text-gray-600">{u.telephone ?? '—'}</TableCell>
-                    <TableCell className="text-gray-500 text-sm">
+                    <TableCell>{u.site ?? '—'}</TableCell>
+                    <TableCell>{u.telephone ?? '—'}</TableCell>
+                    <TableCell className="text-muted-foreground text-sm">
                       {u.last_login
                         ? new Date(u.last_login).toLocaleDateString('fr-FR', {
                             day: '2-digit',

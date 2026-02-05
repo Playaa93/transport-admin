@@ -8,7 +8,7 @@ import Image from 'next/image';
 
 const PHOTO_LABELS: Record<string, string> = {
   compteur_avant: 'Compteur Avant',
-  compteur_apres: 'Compteur Après',
+  compteur_apres: 'Compteur Apres',
   ticket_caisse: 'Ticket de Caisse',
 };
 
@@ -30,49 +30,51 @@ export default async function CarburantDetailPage({
   }
 
   return (
-    <div className="container mx-auto py-8">
-      <div className="mb-6">
+    <div className="space-y-6">
+      <div>
         <Link
           href="/carburant"
-          className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-4"
+          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-4"
         >
-          <ArrowLeft className="mr-2 h-4 w-4" />
+          <ArrowLeft className="h-4 w-4" />
           Retour aux prises de carburant
         </Link>
-        <h1 className="text-3xl font-bold">{prise.vehicules?.immatriculation || 'N/A'}</h1>
+        <h1 className="text-2xl font-semibold tracking-tight text-foreground">
+          {prise.vehicules?.immatriculation || 'N/A'}
+        </h1>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-4 md:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>Informations générales</CardTitle>
+            <CardTitle>Informations generales</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
               <div className="text-sm font-medium text-muted-foreground">Type de carburant</div>
               <div className="mt-1">
-                <Badge variant="outline">{prise.type_carburant}</Badge>
+                <Badge variant="outline" className="rounded-full">{prise.type_carburant}</Badge>
               </div>
             </div>
             <div>
-              <div className="text-sm font-medium text-muted-foreground">Quantité</div>
-              <div className="mt-1 text-lg font-semibold">
+              <div className="text-sm font-medium text-muted-foreground">Quantite</div>
+              <div className="mt-1 text-lg font-semibold text-foreground">
                 {prise.quantite ? `${prise.quantite} L` : 'N/A'}
               </div>
             </div>
             <div>
               <div className="text-sm font-medium text-muted-foreground">Montant TTC</div>
-              <div className="mt-1 text-lg font-semibold">
+              <div className="mt-1 text-lg font-semibold text-foreground">
                 {prise.montant_ttc ? `${prise.montant_ttc.toFixed(2)} €` : 'N/A'}
               </div>
             </div>
             <div>
               <div className="text-sm font-medium text-muted-foreground">Conducteur</div>
-              <div className="mt-1">{prise.conducteur_nom || 'N/A'}</div>
+              <div className="mt-1 text-foreground">{prise.conducteur_nom || 'N/A'}</div>
             </div>
             <div>
               <div className="text-sm font-medium text-muted-foreground">Date</div>
-              <div className="mt-1">
+              <div className="mt-1 text-foreground">
                 {prise.date
                   ? new Date(prise.date).toLocaleDateString('fr-FR', {
                       day: '2-digit',
@@ -89,25 +91,25 @@ export default async function CarburantDetailPage({
 
         <Card>
           <CardHeader>
-            <CardTitle>Véhicule</CardTitle>
+            <CardTitle>Vehicule</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
               <div className="text-sm font-medium text-muted-foreground">Immatriculation</div>
-              <div className="mt-1 text-lg font-semibold">
+              <div className="mt-1 text-lg font-semibold text-foreground">
                 {prise.vehicules?.immatriculation || 'N/A'}
               </div>
             </div>
             {prise.vehicules?.marque && (
               <div>
                 <div className="text-sm font-medium text-muted-foreground">Marque</div>
-                <div className="mt-1">{prise.vehicules.marque}</div>
+                <div className="mt-1 text-foreground">{prise.vehicules.marque}</div>
               </div>
             )}
             {prise.vehicules?.modele && (
               <div>
-                <div className="text-sm font-medium text-muted-foreground">Modèle</div>
-                <div className="mt-1">{prise.vehicules.modele}</div>
+                <div className="text-sm font-medium text-muted-foreground">Modele</div>
+                <div className="mt-1 text-foreground">{prise.vehicules.modele}</div>
               </div>
             )}
           </CardContent>
@@ -115,18 +117,18 @@ export default async function CarburantDetailPage({
       </div>
 
       {prise.prise_carburant_photos && prise.prise_carburant_photos.length > 0 && (
-        <Card className="mt-6">
+        <Card>
           <CardHeader>
             <CardTitle>Photos</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {prise.prise_carburant_photos.map((photo: any) => (
                 <div key={photo.id} className="space-y-2">
-                  <div className="text-sm font-medium">
+                  <div className="text-sm font-medium text-muted-foreground">
                     {PHOTO_LABELS[photo.angle] || photo.angle}
                   </div>
-                  <div className="relative aspect-video overflow-hidden rounded-lg border bg-muted">
+                  <div className="relative aspect-video overflow-hidden rounded-2xl border border-border/50 bg-muted">
                     {photo.storage_url ? (
                       <Image
                         src={photo.storage_url}

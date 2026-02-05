@@ -51,31 +51,31 @@ export default async function DashboardPage() {
   ]);
 
   const statCards = [
-    { label: 'Véhicules', value: stats.vehicules, icon: Truck, color: 'text-blue-600 bg-blue-50' },
-    { label: 'Inspections', value: stats.inspections, icon: ClipboardCheck, color: 'text-teal-600 bg-teal-50' },
-    { label: 'Prises carburant', value: stats.carburant, icon: Fuel, color: 'text-amber-600 bg-amber-50' },
-    { label: 'Utilisateurs', value: stats.utilisateurs, icon: Users, color: 'text-purple-600 bg-purple-50' },
+    { label: 'Vehicules', value: stats.vehicules, icon: Truck, iconColor: 'text-blue-600 dark:text-blue-400', iconBg: 'bg-blue-100 dark:bg-blue-500/15' },
+    { label: 'Inspections', value: stats.inspections, icon: ClipboardCheck, iconColor: 'text-primary', iconBg: 'bg-primary/10' },
+    { label: 'Prises carburant', value: stats.carburant, icon: Fuel, iconColor: 'text-amber-600 dark:text-amber-400', iconBg: 'bg-amber-100 dark:bg-amber-500/15' },
+    { label: 'Utilisateurs', value: stats.utilisateurs, icon: Users, iconColor: 'text-violet-600 dark:text-violet-400', iconBg: 'bg-violet-100 dark:bg-violet-500/15' },
   ];
 
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-500 mt-1">Vue d&apos;ensemble de la flotte</p>
+        <h1 className="text-2xl font-semibold tracking-tight text-foreground">Dashboard</h1>
+        <p className="text-muted-foreground mt-1">Vue d&apos;ensemble de la flotte</p>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {statCards.map((card) => (
-          <Card key={card.label}>
+          <Card key={card.label} className="hover-lift">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-500">{card.label}</p>
-                  <p className="text-3xl font-bold text-gray-900 mt-1">{card.value}</p>
+                  <p className="text-sm text-muted-foreground">{card.label}</p>
+                  <p className="text-4xl font-bold text-foreground mt-1 animate-count-up">{card.value}</p>
                 </div>
-                <div className={`p-3 rounded-xl ${card.color}`}>
-                  <card.icon className="h-6 w-6" />
+                <div className={`p-3 rounded-xl ${card.iconBg}`}>
+                  <card.icon className={`h-6 w-6 ${card.iconColor}`} />
                 </div>
               </div>
             </CardContent>
@@ -87,27 +87,31 @@ export default async function DashboardPage() {
         {/* Recent inspections */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Dernières inspections</CardTitle>
+            <CardTitle className="text-lg">Dernieres inspections</CardTitle>
           </CardHeader>
           <CardContent>
             {recentInspections.length === 0 ? (
-              <p className="text-sm text-gray-400">Aucune inspection</p>
+              <p className="text-sm text-muted-foreground">Aucune inspection</p>
             ) : (
-              <div className="space-y-3">
+              <div className="space-y-1">
                 {recentInspections.map((i: any) => (
-                  <div key={i.id} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
+                  <div key={i.id} className="flex items-center justify-between py-3 border-b border-border/50 last:border-0">
                     <div>
-                      <p className="font-medium text-gray-900">{i.vehicules?.immatriculation ?? '—'}</p>
-                      <p className="text-xs text-gray-500">
+                      <p className="font-medium text-foreground">{i.vehicules?.immatriculation ?? '—'}</p>
+                      <p className="text-xs text-muted-foreground">
                         {i.type === 'prise_en_charge' ? 'Prise en charge' : 'Remise'}
                         {i.conducteur_nom ? ` · ${i.conducteur_nom}` : ''}
                       </p>
                     </div>
                     <div className="text-right">
-                      <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${i.statut === 'complete' ? 'bg-green-50 text-green-700' : 'bg-amber-50 text-amber-700'}`}>
-                        {i.statut === 'complete' ? 'Complète' : 'En cours'}
+                      <span className={`inline-block px-2.5 py-1 rounded-full text-xs font-medium ${
+                        i.statut === 'complete'
+                          ? 'bg-green-100 text-green-700 dark:bg-green-500/15 dark:text-green-400'
+                          : 'bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400'
+                      }`}>
+                        {i.statut === 'complete' ? 'Complete' : 'En cours'}
                       </span>
-                      <p className="text-xs text-gray-400 mt-1">
+                      <p className="text-xs text-muted-foreground mt-1">
                         {new Date(i.created_at).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}
                       </p>
                     </div>
@@ -121,25 +125,25 @@ export default async function DashboardPage() {
         {/* Recent fuel */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Dernières prises carburant</CardTitle>
+            <CardTitle className="text-lg">Dernieres prises carburant</CardTitle>
           </CardHeader>
           <CardContent>
             {recentFuel.length === 0 ? (
-              <p className="text-sm text-gray-400">Aucune prise de carburant</p>
+              <p className="text-sm text-muted-foreground">Aucune prise de carburant</p>
             ) : (
-              <div className="space-y-3">
+              <div className="space-y-1">
                 {recentFuel.map((f: any) => (
-                  <div key={f.id} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
+                  <div key={f.id} className="flex items-center justify-between py-3 border-b border-border/50 last:border-0">
                     <div>
-                      <p className="font-medium text-gray-900">{f.vehicules?.immatriculation ?? '—'}</p>
-                      <p className="text-xs text-gray-500">
+                      <p className="font-medium text-foreground">{f.vehicules?.immatriculation ?? '—'}</p>
+                      <p className="text-xs text-muted-foreground">
                         {f.type_carburant?.toUpperCase()}
                         {f.conducteur_nom ? ` · ${f.conducteur_nom}` : ''}
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="font-medium text-gray-900">{f.quantite} L</p>
-                      <p className="text-xs text-gray-500">{f.montant_ttc} € TTC</p>
+                      <p className="font-medium text-foreground">{f.quantite} L</p>
+                      <p className="text-xs text-muted-foreground">{f.montant_ttc} € TTC</p>
                     </div>
                   </div>
                 ))}

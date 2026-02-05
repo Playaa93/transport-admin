@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 
 export const dynamic = 'force-dynamic';
 
@@ -17,7 +17,7 @@ export default async function VehiculesPage() {
     console.error('Error fetching vehicules:', error);
     return (
       <div className="p-8">
-        <p className="text-red-500">Erreur lors du chargement des véhicules</p>
+        <p className="text-destructive">Erreur lors du chargement des vehicules</p>
       </div>
     );
   }
@@ -25,48 +25,42 @@ export default async function VehiculesPage() {
   const vehiculeCount = vehicules?.length || 0;
 
   return (
-    <div className="p-8 space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Véhicules</h1>
-          <p className="text-muted-foreground mt-1">
-            {vehiculeCount} véhicule{vehiculeCount !== 1 ? 's' : ''}
-          </p>
-        </div>
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-2xl font-semibold tracking-tight text-foreground">Vehicules</h1>
+        <p className="text-muted-foreground mt-1">
+          {vehiculeCount} vehicule{vehiculeCount !== 1 ? 's' : ''}
+        </p>
       </div>
 
       <Card>
-        <CardHeader>
-          <CardTitle>Liste des véhicules</CardTitle>
-        </CardHeader>
-        <CardContent>
+        <CardContent className="p-0">
           {vehicules && vehicules.length > 0 ? (
             <Table>
               <TableHeader>
-                <TableRow>
+                <TableRow className="bg-muted/50">
                   <TableHead>Immatriculation</TableHead>
                   <TableHead>Type</TableHead>
                   <TableHead>Site</TableHead>
                   <TableHead>Statut</TableHead>
-                  <TableHead>Kilométrage</TableHead>
-                  <TableHead>Date révision</TableHead>
+                  <TableHead>Kilometrage</TableHead>
+                  <TableHead>Date revision</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {vehicules.map((vehicule) => (
-                  <TableRow key={vehicule.id}>
-                    <TableCell className="font-medium">
+                  <TableRow key={vehicule.id} className="hover:bg-muted/30 transition-colors">
+                    <TableCell className="font-medium text-foreground">
                       {vehicule.immatriculation}
                     </TableCell>
                     <TableCell>{vehicule.type}</TableCell>
                     <TableCell>{vehicule.site || '-'}</TableCell>
                     <TableCell>
                       <Badge
-                        variant={vehicule.statut === 'Disponible' ? 'default' : 'secondary'}
                         className={
                           vehicule.statut === 'Disponible'
-                            ? 'bg-green-500 hover:bg-green-600'
-                            : 'bg-amber-500 hover:bg-amber-600'
+                            ? 'bg-green-100 text-green-700 hover:bg-green-200 dark:bg-green-500/15 dark:text-green-400 dark:hover:bg-green-500/25'
+                            : 'bg-amber-100 text-amber-700 hover:bg-amber-200 dark:bg-amber-500/15 dark:text-amber-400 dark:hover:bg-amber-500/25'
                         }
                       >
                         {vehicule.statut}
@@ -88,7 +82,7 @@ export default async function VehiculesPage() {
             </Table>
           ) : (
             <p className="text-center text-muted-foreground py-8">
-              Aucun véhicule trouvé
+              Aucun vehicule trouve
             </p>
           )}
         </CardContent>
